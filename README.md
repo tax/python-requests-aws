@@ -15,8 +15,9 @@ from awsauth import S3Auth
 ACCESS_KEY = 'ACCESSKEYXXXXXXXXXXXX'
 SECRET_KEY = 'AWSSECRETKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'        
 
+s = 'Sam is sweet'
 # Creating a file
-r = requests.put('http://mybucket.s3.amazonaws.com/myfile.txt', data='Sam is sweet', auth=S3Auth(ACCESS_KEY, SECRET_KEY))
+r = requests.put('http://mybucket.s3.amazonaws.com/myfile.txt', data=s, auth=S3Auth(ACCESS_KEY, SECRET_KEY))
 
 # Downloading a file
 r = requests.get('http://mybucket.s3.amazonaws.com/myfile.txt', auth=S3Auth(ACCESS_KEY, SECRET_KEY))

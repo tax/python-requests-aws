@@ -3,7 +3,7 @@
 AWS authentication for Amazon S3 for the wonderful [pyhon requests library](http://python-requests.org)
 
 - Tested with python 2.6
-- Right now only S3 is supported
+- At the moment only S3 is supported
 
 ## Usage
 

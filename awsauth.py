@@ -14,6 +14,7 @@ from requests.auth import AuthBase
 class S3Auth(AuthBase):
     """Attaches AWS Authentication to the given Request object."""
 
+    service_base_url = 's3.amazonaws.com'
     # List of Query String Arguments of Interest
     special_params = [
         'acl', 'location', 'logging', 'partNumber', 'policy', 'requestPayment',
@@ -22,8 +23,11 @@ class S3Auth(AuthBase):
         'response-expires', 'reponse-cache-control',
         'response-content-disposition', 'response-content-encoding'
     ]
+    
 
-    def __init__(self, access_key, secret_key):
+    def __init__(self, access_key, secret_key, service_url=None):
+        if service_url:
+            self.service_base_url = service_url    
         self.access_key = str(access_key)
         self.secret_key = str(secret_key)
 
@@ -46,15 +50,11 @@ class S3Auth(AuthBase):
 
         #Sort alphabetical
         query_args.sort()
-        bucket = ''
 
-        split = parsedurl.netloc.split('.')
-
-        if len(split) == 4:
-            bucket = split[0]
-
-        if len(split) == 3 and split[0].lower() != 's3':
-            bucket = split[0]
+        bucket = parsedurl.netloc[:-len(self.service_base_url)]
+        if len(bucket) > 1:
+            # remove last dot
+            bucket = bucket[:-1]
 
         interesting_headers = {}
         ok_keys = ['content-md5', 'content-type', 'date']

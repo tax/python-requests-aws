@@ -93,7 +93,7 @@ class S3Auth(AuthBase):
             buf += '/%s' % bucket
 
         # add the objectkey.  even if it doesn't exist, add the slash
-        buf += '/%s' % urllib.quote_plus(objectkey)
+        buf += '/%s' % urllib.quote(objectkey)
 
         params_found = False
 

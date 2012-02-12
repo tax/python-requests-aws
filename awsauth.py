@@ -20,7 +20,7 @@ class S3Auth(AuthBase):
         'acl', 'location', 'logging', 'partNumber', 'policy', 'requestPayment',
         'torrent', 'versioning', 'versionId', 'versions', 'website', 'uploads',
         'uploadId', 'response-content-type', 'response-content-language',
-        'response-expires', 'reponse-cache-control',
+        'response-expires', 'response-cache-control',
         'response-content-disposition', 'response-content-encoding'
     ]
     

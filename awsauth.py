@@ -5,7 +5,9 @@ import hmac
 import urllib
 
 from hashlib import sha1 as sha
-from urlparse import urlparse
+
+from urlparse import urlparse, urlunparse
+
 from email.utils import formatdate
 
 from requests.auth import AuthBase
@@ -23,11 +25,11 @@ class S3Auth(AuthBase):
         'response-expires', 'response-cache-control', 'delete', 'lifecycle',
         'response-content-disposition', 'response-content-encoding'
     ]
-    
+
 
     def __init__(self, access_key, secret_key, service_url=None):
         if service_url:
-            self.service_base_url = service_url    
+            self.service_base_url = service_url
         self.access_key = str(access_key)
         self.secret_key = str(secret_key)
 
@@ -44,6 +46,13 @@ class S3Auth(AuthBase):
         return base64.encodestring(h.digest()).strip()
 
     def get_canonical_string(self, r):
+        # r.url needs to be encoded as well
+        r_url = urlparse(r.url)
+        # what is a man to do?
+        parsedurl = list(r_url)
+        parsedurl[2] = urllib.quote_plus(parsedurl[2][1:]) # path includes the leading slash, which should not be part of the %-encoded string
+        r.url = urlunparse(parsedurl)
+
         parsedurl = urlparse(r.url)
         objectkey = parsedurl.path[1:]
         query_args = parsedurl.query.split('&')
@@ -51,10 +60,18 @@ class S3Auth(AuthBase):
         #Sort alphabetical
         query_args.sort()
 
+        '''
         bucket = parsedurl.netloc[:-len(self.service_base_url)]
         if len(bucket) > 1:
             # remove last dot
             bucket = bucket[:-1]
+        '''
+        # stolen from https://github.com/kennethreitz/python-requests-aws/blob/master/awsauth.py
+        bucket = ''
+        netloc_split = parsedurl.netloc.split('.')
+        if ((len(netloc_split) == 4) or
+                (len(netloc_split) == 3 and netloc_split[0].lower() != 's3')):
+            bucket = netloc_split[0]
 
         interesting_headers = {}
         ok_keys = ['content-md5', 'content-type', 'date']
@@ -93,7 +110,7 @@ class S3Auth(AuthBase):
             buf += '/%s' % bucket
 
         # add the objectkey.  even if it doesn't exist, add the slash
-        buf += '/%s' % urllib.quote(objectkey)
+        buf += '/%s' % objectkey
 
         params_found = False
 
@@ -110,4 +127,3 @@ class S3Auth(AuthBase):
                 params_found = True
 
         return buf
-

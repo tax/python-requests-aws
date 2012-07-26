@@ -3,13 +3,9 @@
 import base64
 import hmac
 import urllib
-
 from hashlib import sha1 as sha
-
 from urlparse import urlparse, urlunparse
-
 from email.utils import formatdate
-
 from requests.auth import AuthBase
 
 
@@ -37,7 +33,6 @@ class S3Auth(AuthBase):
         # Create date header if it is not created yet.
         if not 'date' in r.headers and not 'x-amz-date' in r.headers:
             r.headers['date'] = formatdate(timeval=None, localtime=False, usegmt=True)
-
         r.headers['Authorization'] = 'AWS %s:%s'%(self.access_key, self.get_signature(r))
         return r
 
@@ -55,10 +50,7 @@ class S3Auth(AuthBase):
 
         parsedurl = urlparse(r.url)
         objectkey = parsedurl.path[1:]
-        query_args = parsedurl.query.split('&')
-
-        #Sort alphabetical
-        query_args.sort()
+        query_args = sorted(parsedurl.query.split('&'))
 
         '''
         bucket = parsedurl.netloc[:-len(self.service_base_url)]

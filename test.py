@@ -41,6 +41,9 @@ class TestAWS(unittest.TestCase):
         # Removing a file
         r = requests.delete(url, auth=self.auth)
         self.assertEqual(r.status_code, 204)
-        
+
+    def test_travisfail(self):
+        self.assertEqual(r.status_code, 204, "This should fail")
+
 if __name__ == '__main__':
     unittest.main()

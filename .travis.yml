@@ -4,9 +4,7 @@ python:
   - "2.6"
 env:
   global:
-    - secure: "DOCQlFRUEiVQ/Z4r9dRvkI7tStyJVlTJkFp6yOnbH/YK3WveCjIKUv2B79Up\na5TcVi7lvmEFYs8L9Rm+Ms3Z77u36QzhCIY3QwvE7jLf746jWAKZIPwo8xLD\nqia8N6gfjOMElxdbFx0HQSqhCkrWze62+C1g31Nr1NymfGbKhFU="
-    - secure: "WZYImZRlT2EvtZOAasxt+zbKeJXp651ncLI8djgE1X/Hy9P2nmDb7yikKhGw\nQE6P/VSPaISVIJ39LZ1dwTmAGV2txmNiSfZ/YPw4CH784O7Y4U9wNsEhcxtd\nyhuRKjJwAZ7ZlVA87ePv38xgdbG/9DjvX4Bsz9yXobJn7SuEJ6U="    
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+    - secure: "Xk+rgLne+LDucpavGjAI9312X8izrzzoNwb4VW5JjP3yzcmi9eBL2o9NW92o\ng2tLh229cLPBHHaw/GZ5hbUjR9SH9Febl18o8tdyw7YCcJxbSzGKzFN9Wlrb\nYOJOdVoMTSdWKzEZjEDKEn+HI4W+5fhsximOXNYU81P3dgt7s7k="
 install:
   - pip install requests
 # command to run tests, e.g. python setup.py test

@@ -14,6 +14,7 @@ if 'AWS_SECRET_KEY' in os.environ:
 
 class TestAWS(unittest.TestCase):
     def setUp(self):
+        print ACCESS_KEY[:3], SECRET_KEY[:3]
         self.auth=S3Auth(ACCESS_KEY, SECRET_KEY)
     
     def test_put_get_delete(self):

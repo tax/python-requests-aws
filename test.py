@@ -42,8 +42,5 @@ class TestAWS(unittest.TestCase):
         r = requests.delete(url, auth=self.auth)
         self.assertEqual(r.status_code, 204)
 
-    def test_travisfail(self):
-        self.assertEqual(2, 4, "This should fail")
-
 if __name__ == '__main__':
     unittest.main()

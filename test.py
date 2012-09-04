@@ -43,7 +43,7 @@ class TestAWS(unittest.TestCase):
         self.assertEqual(r.status_code, 204)
 
     def test_travisfail(self):
-        self.assertEqual(r.status_code, 204, "This should fail")
+        self.assertEqual(2, 4, "This should fail")
 
 if __name__ == '__main__':
     unittest.main()

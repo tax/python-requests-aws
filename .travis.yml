@@ -3,8 +3,7 @@ python:
   - "2.7"
   - "2.6"
 env:
-  global:
-    - secure: "Xk+rgLne+LDucpavGjAI9312X8izrzzoNwb4VW5JjP3yzcmi9eBL2o9NW92o\ng2tLh229cLPBHHaw/GZ5hbUjR9SH9Febl18o8tdyw7YCcJxbSzGKzFN9Wlrb\nYOJOdVoMTSdWKzEZjEDKEn+HI4W+5fhsximOXNYU81P3dgt7s7k="
+  - secure: "Xk+rgLne+LDucpavGjAI9312X8izrzzoNwb4VW5JjP3yzcmi9eBL2o9NW92o\ng2tLh229cLPBHHaw/GZ5hbUjR9SH9Febl18o8tdyw7YCcJxbSzGKzFN9Wlrb\nYOJOdVoMTSdWKzEZjEDKEn+HI4W+5fhsximOXNYU81P3dgt7s7k="
 install:
   - pip install requests
 # command to run tests, e.g. python setup.py test

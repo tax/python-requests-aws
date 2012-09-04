@@ -4,8 +4,8 @@ python:
   - "2.6"
 env:
   global:
-    secure: "ew8SSZE43Vh0CG8B/Kv5n/9UrkTFtGcBTFO7wnTRE36+9b9Nsy8vhUF9qH5e\nWk7cdb7gMviagE3QWpqgC6jk25E1+CkEapdi8UDzWrrJnMfJwtsWLKOWGHTl\nxjPFx62NahQ6pTC6e+8byQcGmCjwYvLJPQEsODg04DmQgLjqU8E="
-    secure: "q+jitdZFaKzPjCj59yWV9mbR80AMQ1619ahipJPOKE46b713H6DIBwKY2z/r\nWSVn84nIK/zrczRzdO/3D3I/+BjYFfAXNHQHb7SSfEYx5wJ0vbqTS/lM7B//\nFjm9wNixj/+wUrtA+hwXRaNddQMUGxdkMdokItQpFQEiayfMV6g="
+    - secure: "ew8SSZE43Vh0CG8B/Kv5n/9UrkTFtGcBTFO7wnTRE36+9b9Nsy8vhUF9qH5e\nWk7cdb7gMviagE3QWpqgC6jk25E1+CkEapdi8UDzWrrJnMfJwtsWLKOWGHTl\nxjPFx62NahQ6pTC6e+8byQcGmCjwYvLJPQEsODg04DmQgLjqU8E="
+    - secure: "q+jitdZFaKzPjCj59yWV9mbR80AMQ1619ahipJPOKE46b713H6DIBwKY2z/r\nWSVn84nIK/zrczRzdO/3D3I/+BjYFfAXNHQHb7SSfEYx5wJ0vbqTS/lM7B//\nFjm9wNixj/+wUrtA+hwXRaNddQMUGxdkMdokItQpFQEiayfMV6g="
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
   - pip install requests

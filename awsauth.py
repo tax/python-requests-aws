@@ -54,20 +54,12 @@ class S3Auth(AuthBase):
             # remove last dot
             bucket = bucket[:-1]
 
-        interesting_headers = {}
-        ok_keys = ['content-md5', 'content-type', 'date']
+        interesting_headers = {'content-md5':'', 'content-type':'', 'date':''}
 
         for key in headers:
             lk = key.lower()
-            if headers[key] is not None and (lk in ok_keys or lk.startswith('x-amz-')):
+            if headers[key] and (lk in interesting_headers.keys() or lk.startswith('x-amz-')):
                 interesting_headers[lk] = headers[key].strip()
-
-        # these keys get empty strings if they don't exist
-        if not interesting_headers.has_key('content-type'):
-            interesting_headers['content-type'] = ''
-
-        if not interesting_headers.has_key('content-md5'):
-            interesting_headers['content-md5'] = ''
 
         # If x-amz-date is used it supersedes the date header.
         if interesting_headers.has_key('x-amz-date'):
@@ -76,7 +68,6 @@ class S3Auth(AuthBase):
         buf = '%s\n' % method
         for key in sorted(interesting_headers.keys()):
             val = interesting_headers[key]
-
             if key.startswith('x-amz-'):
                 buf += '%s:%s\n' % (key, val)
             else:

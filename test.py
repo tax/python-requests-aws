@@ -15,7 +15,6 @@ if 'AWS_SECRET_KEY' in os.environ:
 class TestAWS(unittest.TestCase):
     def setUp(self):
         print os.environ
-        print ACCESS_KEY[:3], SECRET_KEY[:3]
         self.auth=S3Auth(ACCESS_KEY, SECRET_KEY)
     
     def test_put_get_delete(self):
@@ -28,8 +27,8 @@ class TestAWS(unittest.TestCase):
         self.assertEqual(r.content, 'Sam is sweet')
         # Removing a file
         r = requests.delete('http://'+ TEST_BUCKET + '.s3.amazonaws.com/myfile.txt', auth=self.auth)
-        self.assertEqual(r.status_code, 204)
-
+        self.assertEqual(r.status_code, 204)        
+        
     def test_put_get_delete_filnamehasplus(self):
         testdata = 'Sam is sweet'
         filename = 'my+file.txt'

@@ -28,3 +28,10 @@ if r.content == 'Sam is sweet':
 r = requests.delete('http://mybucket.s3.amazonaws.com/file.txt', auth=S3Auth(ACCESS_KEY, SECRET_KEY))
 
 ```
+
+## Installation
+Installing requests-aws is simple with pip:
+
+```
+    $ pip install requests-aws
+```

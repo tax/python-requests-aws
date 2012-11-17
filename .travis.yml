@@ -3,8 +3,9 @@ python:
   - "2.7"
   - "2.6"
 env:
-  - secure: "NrT2bJ4b99KxnciwZRjWLn2vCCVTKwQo9zuCEzwLqAAntCVXLe1vGYjzGcy9\n6O7GpknQjkV8S2NKjMX8rB/SEKZpzqA9qdJlG2be2rEGQjMekcKdCX9E5Mok\n1v18MelgDLXXIbkktd0JCHtOPOxYNXIl6Olw9BS3YfjdJspzYJ0="
-  - secure: "VBK3lAblZ4G48WWnLRyeqkE4GFzQbIX2xifPG/Lhd7GqdfLrjXqepbH2d3eP\nwsZ3V7g/KgleDUHzlOAvYWbrVMPNpJXhSSLRjBTy0eoo1uGqgfrJ2wJy1pLe\noq1cUpa4IQ0puNLl+0pYk/UCgYNd8Zg66I52ZeEPYKHdyybXtls="
+  global:
+    - secure: "NrT2bJ4b99KxnciwZRjWLn2vCCVTKwQo9zuCEzwLqAAntCVXLe1vGYjzGcy9\n6O7GpknQjkV8S2NKjMX8rB/SEKZpzqA9qdJlG2be2rEGQjMekcKdCX9E5Mok\n1v18MelgDLXXIbkktd0JCHtOPOxYNXIl6Olw9BS3YfjdJspzYJ0="
+    - secure: "VBK3lAblZ4G48WWnLRyeqkE4GFzQbIX2xifPG/Lhd7GqdfLrjXqepbH2d3eP\nwsZ3V7g/KgleDUHzlOAvYWbrVMPNpJXhSSLRjBTy0eoo1uGqgfrJ2wJy1pLe\noq1cUpa4IQ0puNLl+0pYk/UCgYNd8Zg66I52ZeEPYKHdyybXtls="
 install:
   - pip install requests
 # command to run tests, e.g. python setup.py test

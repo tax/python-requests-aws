@@ -42,5 +42,19 @@ class TestAWS(unittest.TestCase):
         r = requests.delete(url, auth=self.auth)
         self.assertEqual(r.status_code, 204)
 
+    def test_put_get_delete_filname_encoded(self):
+        testdata = 'Sam is sweet'
+        filename = 'my%20file.txt'
+        url = 'http://'+ TEST_BUCKET + '.s3.amazonaws.com/%s'%(filename)
+        r = requests.put(url, data=testdata, auth=self.auth)
+        self.assertEqual(r.status_code, 200)
+        # Downloading a file
+        r = requests.get(url, auth=self.auth)
+        self.assertEqual(r.status_code, 200) 
+        self.assertEqual(r.content, testdata)
+        # Removing a file
+        r = requests.delete(url, auth=self.auth)
+        self.assertEqual(r.status_code, 204)
+
 if __name__ == '__main__':
     unittest.main()

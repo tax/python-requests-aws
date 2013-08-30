@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
-
 import base64
 import hmac
-import urllib
 
 from hashlib import sha1 as sha
-from urlparse import urlparse
+py3k = False
+try:
+    from urlparse import urlparse
+except:
+    py3k = True
+    from urllib.parse import urlparse
 from email.utils import formatdate
 
 from requests.auth import AuthBase
 
 
 class S3Auth(AuthBase):
+
     """Attaches AWS Authentication to the given Request object."""
 
     service_base_url = 's3.amazonaws.com'
@@ -23,7 +27,6 @@ class S3Auth(AuthBase):
         'response-expires', 'response-cache-control', 'delete', 'lifecycle',
         'response-content-disposition', 'response-content-encoding'
     ]
-    
 
     def __init__(self, access_key, secret_key, service_url=None):
         if service_url:
@@ -34,14 +37,28 @@ class S3Auth(AuthBase):
     def __call__(self, r):
         # Create date header if it is not created yet.
         if not 'date' in r.headers and not 'x-amz-date' in r.headers:
-            r.headers['date'] = formatdate(timeval=None, localtime=False, usegmt=True)
-
-        r.headers['Authorization'] = 'AWS %s:%s'%(self.access_key, self.get_signature(r))
+            r.headers['date'] = formatdate(
+                timeval=None,
+                localtime=False,
+                usegmt=True)
+        signature = self.get_signature(r)
+        if py3k:
+            signature = signature.decode('utf-8')
+        r.headers['Authorization'] = 'AWS %s:%s' % (self.access_key, signature)
+        from pprint import pprint
+        pprint(r.headers)
         return r
 
     def get_signature(self, r):
-        canonical_string = self.get_canonical_string(r.url, r.headers, r.method) 
-        h = hmac.new(self.secret_key, canonical_string, digestmod=sha)
+        canonical_string = self.get_canonical_string(
+            r.url, r.headers, r.method)
+        if py3k:
+            key = self.secret_key.encode('utf-8')
+            msg = canonical_string.encode('utf-8')
+        else:
+            key = self.secret_key
+            msg = canonical_string
+        h = hmac.new(key, msg, digestmod=sha)
         return base64.encodestring(h.digest()).strip()
 
     def get_canonical_string(self, url, headers, method):
@@ -54,16 +71,26 @@ class S3Auth(AuthBase):
             # remove last dot
             bucket = bucket[:-1]
 
-        interesting_headers = {'content-md5':'', 'content-type':'', 'date':''}
-
+        interesting_headers = {
+            'content-md5': '',
+            'content-type': '',
+            'date': ''}
         for key in headers:
             lk = key.lower()
+            try:
+                lk = lk.decode('utf-8')
+            except:
+                pass
             if headers[key] and (lk in interesting_headers.keys() or lk.startswith('x-amz-')):
                 interesting_headers[lk] = headers[key].strip()
 
         # If x-amz-date is used it supersedes the date header.
-        if interesting_headers.has_key('x-amz-date'):
-            interesting_headers['date'] = ''
+        if not py3k:
+            if 'x-amz-date' in interesting_headers:
+                interesting_headers['date'] = ''
+        else:
+            if 'x-amz-date' in interesting_headers:
+                interesting_headers['date'] = ''
 
         buf = '%s\n' % method
         for key in sorted(interesting_headers.keys()):
@@ -91,6 +118,4 @@ class S3Auth(AuthBase):
                 else:
                     buf += '?%s' % q
                 params_found = True
-
         return buf
-

@@ -45,8 +45,6 @@ class S3Auth(AuthBase):
         if py3k:
             signature = signature.decode('utf-8')
         r.headers['Authorization'] = 'AWS %s:%s' % (self.access_key, signature)
-        from pprint import pprint
-        pprint(r.headers)
         return r
 
     def get_signature(self, r):

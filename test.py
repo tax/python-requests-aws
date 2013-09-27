@@ -23,7 +23,7 @@ class TestAWS(unittest.TestCase):
         # Downloading a file
         r = requests.get('http://'+ TEST_BUCKET + '.s3.amazonaws.com/myfile.txt', auth=self.auth)
         self.assertEqual(r.status_code, 200) 
-        self.assertEqual(r.content, 'Sam is sweet')
+        self.assertEqual(r.text, 'Sam is sweet')
         # Removing a file
         r = requests.delete('http://'+ TEST_BUCKET + '.s3.amazonaws.com/myfile.txt', auth=self.auth)
         self.assertEqual(r.status_code, 204)        
@@ -37,7 +37,7 @@ class TestAWS(unittest.TestCase):
         # Downloading a file
         r = requests.get(url, auth=self.auth)
         self.assertEqual(r.status_code, 200) 
-        self.assertEqual(r.content, testdata)
+        self.assertEqual(r.text, testdata)
         # Removing a file
         r = requests.delete(url, auth=self.auth)
         self.assertEqual(r.status_code, 204)
@@ -51,7 +51,7 @@ class TestAWS(unittest.TestCase):
         # Downloading a file
         r = requests.get(url, auth=self.auth)
         self.assertEqual(r.status_code, 200) 
-        self.assertEqual(r.content, testdata)
+        self.assertEqual(r.text, testdata)
         # Removing a file
         r = requests.delete(url, auth=self.auth)
         self.assertEqual(r.status_code, 204)

@@ -6,9 +6,13 @@ from hashlib import sha1 as sha
 py3k = False
 try:
     from urlparse import urlparse
+    from base64 import encodestring
+ 
 except:
     py3k = True
     from urllib.parse import urlparse
+    from base64 import encodebytes as encodestring
+
 from email.utils import formatdate
 
 from requests.auth import AuthBase
@@ -57,7 +61,7 @@ class S3Auth(AuthBase):
             key = self.secret_key
             msg = canonical_string
         h = hmac.new(key, msg, digestmod=sha)
-        return base64.encodestring(h.digest()).strip()
+        return encodestring(h.digest()).strip()
 
     def get_canonical_string(self, url, headers, method):
         parsedurl = urlparse(url)

@@ -15,7 +15,7 @@ if sys.argv[-1] == 'publish':
 
 setup(
     name='requests-aws',
-    version='0.1.3',
+    version='0.1.4',
     author='Paul Tax',
     author_email='paultax@gmail.com',
     include_package_data=True,

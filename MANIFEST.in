@@ -1,1 +1,1 @@
-include README.md *.py
+include LICENSE.txt README.md *.py

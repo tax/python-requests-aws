@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import requests
 
 from awsauth import S3Auth
-
-import StringIO
 
 import gzip
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
             r.raise_for_status()
 
         if r.content == confirmIt:
-            print 'Hala Madrid!'
+            print('Hala Madrid!')
 
         # Removing a file
         r = requests.delete(('http://%s.s3.amazonaws.com/%s' % (bucketName, o)), auth=S3Auth(ACCESS_KEY, SECRET_KEY))

@@ -29,7 +29,8 @@ class S3Auth(AuthBase):
         'torrent', 'versioning', 'versionId', 'versions', 'website', 'uploads',
         'uploadId', 'response-content-type', 'response-content-language',
         'response-expires', 'response-cache-control', 'delete', 'lifecycle',
-        'response-content-disposition', 'response-content-encoding'
+        'response-content-disposition', 'response-content-encoding', 'tagging',
+        'notification', 'cors'
     ]
 
     def __init__(self, access_key, secret_key, service_url=None):

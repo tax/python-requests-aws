@@ -15,17 +15,18 @@ from awsauth import S3Auth
 ACCESS_KEY = 'ACCESSKEYXXXXXXXXXXXX'
 SECRET_KEY = 'AWSSECRETKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'        
 
-s = 'Sam is sweet'
+url = 'http://mybuck.s3.amazonaws.com/file.txt'
+s = 'Lola is sweet'
 # Creating a file
-r = requests.put('http://mybuck.s3.amazonaws.com/file.txt', data=s, auth=S3Auth(ACCESS_KEY, SECRET_KEY))
+r = requests.put(url, data=s, auth=S3Auth(ACCESS_KEY, SECRET_KEY))
 
 # Downloading a file
-r = requests.get('http://mybuck.s3.amazonaws.com/file.txt', auth=S3Auth(ACCESS_KEY, SECRET_KEY))
-if r.text == 'Sam is sweet':
+r = requests.get(url, auth=S3Auth(ACCESS_KEY, SECRET_KEY))
+if r.text == 'Lola is sweet':
     print "It works"
 
 # Removing a file
-r = requests.delete('http://mybuck.s3.amazonaws.com/file.txt', auth=S3Auth(ACCESS_KEY, SECRET_KEY))
+r = requests.delete(url, auth=S3Auth(ACCESS_KEY, SECRET_KEY))
 
 ```
 

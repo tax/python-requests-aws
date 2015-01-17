@@ -1,42 +1,42 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-
 import requests
-
 from awsauth import S3Auth
-
-import gzip
-
-import urllib
 
 ACCESS_KEY = "ACCESSKEYXXXXXXXXXXXX"
 SECRET_KEY = "AWSSECRETKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
-acceptableAccessCodes = (200, 204) # # https://forums.aws.amazon.com/thread.jspa?threadID=28799: http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectDELETE.html
+# https://forums.aws.amazon.com/thread.jspa?threadID=28799:
+# http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectDELETE.html
+acceptable_accesscodes = (200, 204)
 
 if __name__ == '__main__':
 
-    confirmIt = u'Sam is sweet' # Data needs to be in unicode, or it will fail
+    # Data needs to be in unicode, or it will fail
+    data = u'Sam is sweet'
 
-    bucketName = 'mybucket'
-    objectName = ['myfile.txt', 'my+file.txt']
+    bucket = 'mybucket'
+    object_name = ['myfile.txt', 'my+file.txt']
 
-    for o in objectName:
+    for o in object_name:
         # Creating a file
-        r = requests.put(('http://%s.s3.amazonaws.com/%s' % (bucketName, o)), data=confirmIt, auth=S3Auth(ACCESS_KEY, SECRET_KEY))
-        if r.status_code not in acceptableAccessCodes:
+        url = 'http://{0}.s3.amazonaws.com/{1}'.format(bucket, o)
+        r = requests.put(url, data=data, auth=S3Auth(ACCESS_KEY, SECRET_KEY))
+        if r.status_code not in acceptable_accesscodes:
             r.raise_for_status()
 
         # Downloading a file
-        r = requests.get(('http://%s.s3.amazonaws.com/%s' % (bucketName, o)), auth=S3Auth(ACCESS_KEY, SECRET_KEY))
-        if r.status_code not in acceptableAccessCodes:
+        url = 'http://{0}.s3.amazonaws.com/{1}'.format(bucket, o)
+        r = requests.get(url, auth=S3Auth(ACCESS_KEY, SECRET_KEY))
+        if r.status_code not in acceptable_accesscodes:
             r.raise_for_status()
 
-        if r.content == confirmIt:
+        if r.content == data:
             print('Hala Madrid!')
 
         # Removing a file
-        r = requests.delete(('http://%s.s3.amazonaws.com/%s' % (bucketName, o)), auth=S3Auth(ACCESS_KEY, SECRET_KEY))
-        if r.status_code not in acceptableAccessCodes:
+        url = 'http://{0}.s3.amazonaws.com/{1}'.format(bucket, o)
+        r = requests.delete(url, auth=S3Auth(ACCESS_KEY, SECRET_KEY))
+        if r.status_code not in acceptable_accesscodes:
             r.raise_for_status()

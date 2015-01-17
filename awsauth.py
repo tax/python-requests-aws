@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import base64
 import hmac
 
 from hashlib import sha1 as sha
@@ -7,7 +6,6 @@ py3k = False
 try:
     from urlparse import urlparse
     from base64 import encodestring
- 
 except:
     py3k = True
     from urllib.parse import urlparse
@@ -84,7 +82,8 @@ class S3Auth(AuthBase):
                 lk = lk.decode('utf-8')
             except:
                 pass
-            if headers[key] and (lk in interesting_headers.keys() or lk.startswith('x-amz-')):
+            if headers[key] and (lk in interesting_headers.keys()
+                                 or lk.startswith('x-amz-')):
                 interesting_headers[lk] = headers[key].strip()
 
         # If x-amz-date is used it supersedes the date header.

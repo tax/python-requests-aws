@@ -35,5 +35,3 @@ Installing requests-aws is simple with pip:
 ```
     $ pip install requests-aws
 ```
-
-[![Build Status](https://travis-ci.org/tax/python-requests-aws.png?branch=master)](https://travis-ci.org/tax/python-requests-aws)

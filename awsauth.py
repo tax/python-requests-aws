@@ -2,6 +2,8 @@
 import hmac
 
 from hashlib import sha1 as sha
+import urllib
+
 py3k = False
 try:
     from urlparse import urlparse
@@ -115,9 +117,34 @@ class S3Auth(AuthBase):
         for q in query_args:
             k = q.split('=')[0]
             if k in self.special_params:
-                if params_found:
-                    buf += '&%s' % q
-                else:
-                    buf += '?%s' % q
+                buf += '&' if params_found else '?'
                 params_found = True
+
+                try:
+                    k, v = q.split('=', 1)
+
+                except ValueError:
+                    buf += q
+
+                else:
+                    # Riak CS multipart upload ids look like this, `TFDSheOgTxC2Tsh1qVK73A==`, is should be escaped to
+                    # be included as part of a query string.
+                    #
+                    # A requests mp upload part request may look like
+                    # resp = requests.put(
+                    #     'https://url_here',
+                    #     params={
+                    #         'partNumber': 1,
+                    #         'uploadId': 'TFDSheOgTxC2Tsh1qVK73A=='
+                    #     },
+                    #     data='some data',
+                    #     auth=S3Auth('access_key', 'secret_key')
+                    # )
+                    #
+                    # Requests automatically escapes the values in the `params` dict, so now our uploadId is
+                    # `TFDSheOgTxC2Tsh1qVK73A%3D%3D`, if we sign the request with the encoded value the signature will
+                    # not be valid, we'll get 403 Access Denied.
+                    # So we unquote, this is no-op if the value isn't encoded.
+                    buf += '{}={}'.format(k, urllib.unquote(v))
+
         return buf

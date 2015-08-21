@@ -126,5 +126,24 @@ class TestAWS(unittest.TestCase):
         # No Delete ?notification API, empty <NotificationConfiguration>
         # tag is default
 
+    def test_canonical_string_not_using_encoded_query_params(self):
+        url = 'https://bucket.ca.tier3.io/object-name?partNumber=1&uploadId=TFDSheOgTxC2Tsh1qVK73A%3D%3D'
+        headers = {
+            'Content-Length': 0,
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept': '*/*',
+            'User-Agent': 'python-requests/2.7.0 CPython/2.7.6 Linux/3.13.0-24-generic',
+            'Connection': 'keep-alive',
+            'date': 'Fri, 21 Aug 2015 16:08:26 GMT',
+        }
+        method = 'PUT'
+        canonical_string = self.auth.get_canonical_string(url, headers, method)
+        self.assertTrue('TFDSheOgTxC2Tsh1qVK73A%3D%3D' not in canonical_string)
+        self.assertTrue('TFDSheOgTxC2Tsh1qVK73A==' in canonical_string)
+
+        url = 'https://bucket.ca.tier3.io/object-name?partNumber=1&uploadId=not%escaped'
+        canonical_string = self.auth.get_canonical_string(url, headers, method)
+        self.assertTrue('not%escaped' in canonical_string)
+
 if __name__ == '__main__':
     unittest.main()

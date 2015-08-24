@@ -2,7 +2,6 @@
 import hmac
 
 from hashlib import sha1 as sha
-import urllib
 
 py3k = False
 try:

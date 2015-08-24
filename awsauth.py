@@ -146,6 +146,6 @@ class S3Auth(AuthBase):
                     # if we sign the request with the encoded value the signature will
                     # not be valid, we'll get 403 Access Denied.
                     # So we unquote, this is no-op if the value isn't encoded.
-                    buf += '{}={}'.format(k, urllib.unquote(v))
+                    buf += '{key}={value}'.format(key=k, value=urlparse.unquote(v))
 
         return buf

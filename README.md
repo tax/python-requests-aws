@@ -38,3 +38,4 @@ Installing requests-aws is simple with pip:
 ```
     $ pip install requests-aws
 ```
+

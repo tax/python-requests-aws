@@ -6,11 +6,11 @@ import urllib
 
 py3k = False
 try:
-    from urlparse import urlparse
+    from urlparse import urlparse, unquote
     from base64 import encodestring
 except:
     py3k = True
-    from urllib.parse import urlparse
+    from urllib.parse import urlparse, unquote
     from base64 import encodebytes as encodestring
 
 from email.utils import formatdate
@@ -146,6 +146,6 @@ class S3Auth(AuthBase):
                     # if we sign the request with the encoded value the signature will
                     # not be valid, we'll get 403 Access Denied.
                     # So we unquote, this is no-op if the value isn't encoded.
-                    buf += '{key}={value}'.format(key=k, value=urlparse.unquote(v))
+                    buf += '{key}={value}'.format(key=k, value=unquote(v))
 
         return buf

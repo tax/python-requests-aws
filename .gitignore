@@ -1,4 +1,6 @@
 .DS_Store
+dist/
+requests_aws.egg-info/
 env/
 *.pyc
 *.*~

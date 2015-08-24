@@ -127,7 +127,7 @@ class TestAWS(unittest.TestCase):
         # tag is default
 
     def test_canonical_string_not_using_encoded_query_params(self):
-        url = 'https://bucket.ca.tier3.io/object-name?partNumber=1&uploadId=TFDSheOgTxC2Tsh1qVK73A%3D%3D'
+        url = 'https://bucket.ca.tier3.io/object-name?partNumber=1&uploadId=TFDSheOgTxC2Tsh1qVK73A%3D%3D' # NOQA
         headers = {
             'Content-Length': 0,
             'Accept-Encoding': 'gzip, deflate',

@@ -15,15 +15,14 @@ if sys.argv[-1] == 'publish':
 
 setup(
     name='requests-aws',
-    version='0.1.6',
+    version='0.1.7',
     author='Paul Tax',
     author_email='paultax@gmail.com',
     include_package_data=True,
-    install_requires = ['requests>=0.14.0'],
+    install_requires=['requests>=0.14.0'],
     py_modules=['awsauth'],
     url='https://github.com/tax/python-requests-aws',
     license='BSD licence, see LICENCE.txt',
     description='AWS authentication for Amazon S3 for the python requests module',
     long_description=open('README.md').read(),
 )
-

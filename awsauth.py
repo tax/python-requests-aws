@@ -41,7 +41,7 @@ class S3Auth(AuthBase):
 
     def __call__(self, r):
         # Create date header if it is not created yet.
-        if not 'date' in r.headers and not 'x-amz-date' in r.headers:
+        if 'date' not in r.headers and 'x-amz-date' not in r.headers:
             r.headers['date'] = formatdate(
                 timeval=None,
                 localtime=False,
@@ -127,8 +127,8 @@ class S3Auth(AuthBase):
                     buf += q
 
                 else:
-                    # Riak CS multipart upload ids look like this, `TFDSheOgTxC2Tsh1qVK73A==`, is should be escaped to
-                    # be included as part of a query string.
+                    # Riak CS multipart upload ids look like this, `TFDSheOgTxC2Tsh1qVK73A==`,
+                    # is should be escaped to be included as part of a query string.
                     #
                     # A requests mp upload part request may look like
                     # resp = requests.put(
@@ -141,8 +141,9 @@ class S3Auth(AuthBase):
                     #     auth=S3Auth('access_key', 'secret_key')
                     # )
                     #
-                    # Requests automatically escapes the values in the `params` dict, so now our uploadId is
-                    # `TFDSheOgTxC2Tsh1qVK73A%3D%3D`, if we sign the request with the encoded value the signature will
+                    # Requests automatically escapes the values in the `params` dict, so now
+                    # our uploadId is `TFDSheOgTxC2Tsh1qVK73A%3D%3D`,
+                    # if we sign the request with the encoded value the signature will
                     # not be valid, we'll get 403 Access Denied.
                     # So we unquote, this is no-op if the value isn't encoded.
                     buf += '{}={}'.format(k, urllib.unquote(v))
